@@ -1,0 +1,5 @@
+# Create venv
+python -m venv .venv
+
+# Active (Linux/Mac)
+source venv/bin/activate
