@@ -39,7 +39,6 @@ python >= 3.8
 pip
 Installation
 Clone the repository
-git clone https://github.com/misrapk/churn-prediction-ml.git
 cd churn-prediction-ml
 Create virtual environment
 python -m venv venv
