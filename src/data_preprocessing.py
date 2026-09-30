@@ -189,7 +189,7 @@ class DataPreprocessor:
 if __name__ == "__main__":
     preprocessor = DataPreprocessor()
     
-    df = preprocessor.load_data("E:/CODING/Youtube Tutorial/END TO END PROJECT/Churn_predictor_ML/data/telco_comm_churn.csv")
+    df = preprocessor.load_data("/Users/akshaybaldha/Desktop/CHURN_PREDICTOR_ML/data/telco_customer_churn.csv")
     
     X_train, X_test, y_train, y_test = preprocessor.prepare_data(df)    
     
