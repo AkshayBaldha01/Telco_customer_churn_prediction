@@ -1,113 +1,231 @@
-Customer Churn Prediction - End-to-End ML Pipeline
+# Customer Churn Prediction
 
-📋 Project Overview
-A production-ready machine learning pipeline to predict customer churn in the telecommunications industry. This project demonstrates end-to-end ML workflow including data preprocessing, feature engineering, model training, evaluation, and deployment-ready model artifacts.
+An end-to-end machine learning project that predicts which telecom customers are likely to cancel their service, with an interactive Streamlit app for making predictions.
 
-Business Problem: Identifying customers likely to churn helps businesses take proactive retention measures, reducing revenue loss.
+**Business problem:** Finding customers who are likely to churn lets a company reach out early with retention offers and reduce lost revenue.
 
-🎯 Key Results
-Best Model: Logistic Regression
-ROC-AUC Score: 0.8458
-Accuracy: 80.41%
-F1-Score: 0.5929
+---
 
-📊 Dataset
-Source: Telco Customer Churn Dataset
-Size: 7,043 customers
-Features: 20 (demographic, account, and service information)
-Target: Churn (Yes/No)
-Churn Rate: ~26.5%
+## Table of Contents
 
-Features Include:
-Demographics: Gender, Senior Citizen, Partner, Dependents
-Account Info: Tenure, Contract type, Payment method
-Services: Phone, Internet, Online Security, Tech Support, etc.
-Charges: Monthly charges, Total charges
+1. [Results at a Glance](#results-at-a-glance)
+2. [Dataset](#dataset)
+3. [Tech Stack](#tech-stack)
+4. [Project Structure](#project-structure)
+5. [Getting Started](#getting-started)
+6. [Methodology](#methodology)
+7. [Key Insights](#key-insights)
+8. [Streamlit App](#streamlit-app)
+9. [Future Improvements](#future-improvements)
+10. [Lessons Learned](#lessons-learned)
+11. [Author](#author)
+12. [License](#license)
+13. [Acknowledgments](#acknowledgments)
 
-🛠️ Tech Stack
-Language: Python 3.8+
-ML Libraries: scikit-learn, XGBoost, imbalanced-learn
-Data Processing: Pandas, NumPy
-Visualization: Matplotlib, Seaborn
-Model Persistence: Joblib
+---
 
-🚀 Getting Started
+## Results at a Glance
 
-Prerequisites
+Best model: **Logistic Regression**, chosen for the highest ROC-AUC among five models.
 
-python >= 3.8
-pip
-Installation
-Clone the repository
-cd churn-prediction-ml
-Create virtual environment
+| Metric | Score |
+|---|---|
+| ROC-AUC | **0.8458** |
+| Accuracy | 80.41% |
+| F1-Score | 0.5929 |
+
+---
+
+## Dataset
+
+| | |
+|---|---|
+| **Source** | [Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn) (Kaggle, originally from IBM) |
+| **Size** | 7,043 customers |
+| **Features** | 20 |
+| **Target** | `Churn` (Yes / No) |
+| **Churn rate** | about 26.5% (imbalanced) |
+
+**Feature groups**
+
+| Group | Columns |
+|---|---|
+| Demographics | Gender, Senior Citizen, Partner, Dependents |
+| Account | Tenure, Contract type, Payment method, Paperless billing |
+| Services | Phone, Multiple lines, Internet, Online Security, Online Backup, Device Protection, Tech Support, Streaming TV, Streaming Movies |
+| Charges | Monthly charges, Total charges |
+
+---
+
+## Tech Stack
+
+| Area | Tools |
+|---|---|
+| Language | Python 3.8+ |
+| Machine learning | scikit-learn, XGBoost, imbalanced-learn |
+| Data processing | Pandas, NumPy |
+| Visualization | Matplotlib, Seaborn, Plotly |
+| App | Streamlit |
+| Model storage | Joblib |
+
+---
+
+## Project Structure
+
+```
+churn-prediction-ml/
+├── app.py                      # Streamlit app for live predictions
+├── data/                       # Dataset (download from Kaggle)
+├── models/
+│   ├── best_model_*.pkl        # Trained best model
+│   └── preprocessor.pkl        # Fitted encoders and scaler
+├── notebooks/
+│   ├── 01_eda.ipynb            # Exploratory data analysis
+│   └── 03model_training.ipynb  # Model training and comparison
+├── src/
+│   └── data_preprocessing.py   # Reusable preprocessing pipeline
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.8 or higher
+- pip
+
+### Installation
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/AkshayBaldha01/<repo-name>.git
+cd <repo-name>
+
+# 2. Create and activate a virtual environment
 python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-Install dependencies
+source venv/bin/activate        # Windows: venv\Scripts\activate
+
+# 3. Install dependencies
 pip install -r requirements.txt
-Download dataset from Kaggle and place in data/ folder
-Usage
-Run EDA:
-jupyter notebook notebooks/01_eda.ipynb
-Train Models:
-jupyter notebook notebooks/03model_training.ipynb
-Use Preprocessor (standalone):
-python src/data_preprocessing.py
+```
 
-🔍 Methodology
-1. Data Preprocessing
-Handled missing values in TotalCharges
-Created engineered features:
-tenure_group: Categorized tenure into bins
-avg_monthly_per_tenure: Average spending rate
-num_services: Count of subscribed services
-Encoded categorical variables (Label Encoding & Binary Encoding)
-Scaled numerical features using StandardScaler
-2. Model Training
-Trained and compared 5 models:
+4. Download the dataset from Kaggle and place it in the `data/` folder.
 
-Logistic Regression (baseline)
-Decision Tree
-Random Forest
-Gradient Boosting
-XGBoost
-3. Evaluation Metrics
-Accuracy
-Precision
-Recall
-F1-Score
-ROC-AUC (primary metric for imbalanced data)
-4. Model Selection
-Selected [Your best model] based on highest ROC-AUC score, balancing precision and recall for business needs.
+### Usage
 
-Key Insights
-Contract Type is the strongest predictor - month-to-month contracts have 3x higher churn
-Tenure inversely correlates with churn - customers with <12 months tenure churn most
-Monthly Charges - higher charges correlate with increased churn
-Tech Support subscription reduces churn by 40%
-Visualizations
-Model Comparison ROC Curves Confusion Matrix
+| Task | Command |
+|---|---|
+| Explore the data | `jupyter notebook notebooks/01_eda.ipynb` |
+| Train and compare models | `jupyter notebook notebooks/03model_training.ipynb` |
+| Run the preprocessor on its own | `python src/data_preprocessing.py` |
+| Launch the prediction app | `streamlit run app.py` |
 
-🔮 Future Improvements
- Implement hyperparameter tuning (GridSearchCV/RandomizedSearchCV)
- Handle class imbalance with SMOTE/undersampling
- Build REST API with FastAPI for model serving
- Add CI/CD pipeline for automated retraining
- Deploy on AWS/Azure as web service
- Create Streamlit dashboard for predictions
+---
 
-📝 Lessons Learned
-Feature engineering significantly improved model performance (+8% ROC-AUC)
-Class imbalance handling crucial for churn prediction
-Tree-based models outperform linear models for this problem
-Business context matters - optimizing for recall may be more valuable than accuracy
+## Methodology
 
-👤 Author
-Akshay Baldha
+### 1. Data preprocessing
+- Fixed missing values in `TotalCharges`.
+- Created three new features:
 
-📄 License
-This project is licensed under the MIT License - see the LICENSE file for details.
+  | Feature | Meaning |
+  |---|---|
+  | `tenure_group` | Tenure grouped into bins |
+  | `avg_monthly_per_tenure` | Average spend per month of tenure |
+  | `num_services` | Number of subscribed services |
 
-🙏 Acknowledgments
-Dataset provided by IBM Watson Analytics
-Inspired by real-world telecom churn challenges
+- Encoded categorical variables (binary and label encoding).
+- Scaled numerical features with `StandardScaler`.
+
+### 2. Model training
+Five models were trained and compared:
+
+1. Logistic Regression (baseline)
+2. Decision Tree
+3. Random Forest
+4. Gradient Boosting
+5. XGBoost
+
+### 3. Evaluation
+Models were compared on accuracy, precision, recall, F1-score and ROC-AUC. **ROC-AUC was the primary metric** because the classes are imbalanced.
+
+### 4. Model selection
+**Logistic Regression** had the highest ROC-AUC and a good balance of precision and recall. It is also simple and easy to explain to business users.
+
+---
+
+## Key Insights
+
+- **Contract type** is the strongest predictor: month-to-month customers churn far more than customers on longer contracts.
+- **Tenure** is inversely related to churn: customers in their first year churn the most.
+- **Monthly charges:** higher bills go with higher churn.
+- **Tech support:** customers with a tech support subscription churn less.
+
+### Visualizations
+
+| Model comparison | ROC curves | Confusion matrix |
+|---|---|---|
+| *add image* | *add image* | *add image* |
+
+> Save your plots in an `images/` folder and link them here, for example `![ROC curves](images/roc_curves.png)`.
+
+---
+
+## Streamlit App
+
+The app lets you enter a customer's details and returns:
+
+- A **churn probability** shown on a risk gauge (low, medium or high)
+- **Expected 12-month revenue at risk**
+- The **risk factors** that stand out for that customer
+- **Suggested retention actions**
+- A chart of the **features that influenced the prediction most**
+
+Two sample customers (high-risk and low-risk) can be loaded from the sidebar for a quick demo.
+
+```bash
+streamlit run app.py
+```
+
+---
+
+## Future Improvements
+
+- [x] Streamlit dashboard for predictions
+- [ ] Hyperparameter tuning (GridSearchCV / RandomizedSearchCV)
+- [ ] Better class-imbalance handling (SMOTE / undersampling)
+- [ ] REST API with FastAPI for model serving
+- [ ] CI/CD pipeline for automated retraining
+- [ ] Cloud deployment (AWS / Azure)
+
+---
+
+## Lessons Learned
+
+- **Feature engineering** improved model performance.
+- **Class imbalance** matters a lot in churn prediction and needs deliberate handling.
+- **A simple model can win:** Logistic Regression beat the more complex tree-based models on ROC-AUC here.
+- **Business context matters:** depending on the cost of losing a customer, optimizing for recall may be more valuable than accuracy.
+
+---
+
+## Author
+
+**Akshay Baldha**
+GitHub: [AkshayBaldha01](https://github.com/AkshayBaldha01) · LinkedIn: [akshay-baldha](https://www.linkedin.com/in/akshay-baldha-20a552188)
+
+---
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+---
+
+## Acknowledgments
+
+- Dataset provided by IBM Watson Analytics.
+- Inspired by real-world telecom churn challenges.
