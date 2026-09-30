@@ -164,14 +164,6 @@ Models were compared on accuracy, precision, recall, F1-score and ROC-AUC. **ROC
 - **Monthly charges:** higher bills go with higher churn.
 - **Tech support:** customers with a tech support subscription churn less.
 
-### Visualizations
-
-| Model comparison | ROC curves | Confusion matrix |
-|---|---|---|
-| *add image* | *add image* | *add image* |
-
-> Save your plots in an `images/` folder and link them here, for example `![ROC curves](images/roc_curves.png)`.
-
 ---
 
 ## Streamlit App
